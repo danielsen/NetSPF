@@ -19,16 +19,16 @@ namespace NetSPF
         /// information; initially, the domain portion of the
         /// "MAIL FROM" or "HELO" identity.</param>
         /// <param name="sender">the "MAIL FROM" or "HELO" identity.</param>
-        /// <param name="helloDomain">Domain as presented by the client in the HELO or EHLO command.</param>
+        /// <param name="heloDomain">Domain as presented by the client in the HELO or EHLO command.</param>
         /// <param name="hostDomain">Domain of the current host, performing SPF authentication.</param>
         /// <param name="spfExpressions">SPF Expressions that can be used, in case a domain lacks SPF records in the DNS.</param>
         /// <returns>Result of SPF evaluation, together with an optional explanation string,
         /// if one exists, and if the result indicates a failure.</returns>
         public static Task<KeyValuePair<SpfResult, string>> CheckHost(IPAddress address, string domainName,
             string sender,
-            string helloDomain, string hostDomain, params SpfExpression[] spfExpressions)
+            string heloDomain, string hostDomain, params SpfExpression[] spfExpressions)
         {
-            SpfStatement spfStatement = new SpfStatement(sender, domainName, address, helloDomain, hostDomain);
+            SpfStatement spfStatement = new SpfStatement(sender, domainName, address, heloDomain, hostDomain);
             return CheckHost(spfStatement, spfExpressions);
         }
 
