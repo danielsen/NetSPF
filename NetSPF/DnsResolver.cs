@@ -2,7 +2,9 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Resolution.Common;
 using Resolution.Protocol;
+using Resolution.Protocol.Records;
 
 namespace NetSPF
 {
@@ -13,37 +15,37 @@ namespace NetSPF
 
         static DnsResolver()
         {
-            Resolver = new Resolver();
+            Resolver = ResolverFactory.GetResolver(transportType: TransportType.Tcp);
         }
 
         public static async Task<IPAddress[]> LookupIp4Addresses(string domainLabel)
         {
-            var response = await Task.Run(() => Resolver.Query(domainLabel, QType.A, QClass.In));
-            return response.RecordsA.Select(r => r.Address).ToArray();
+            var response = await Task.Run(() => Resolver.Query(domainLabel, QuestionType.A, QuestionClass.In));
+            return response.GetAnswers<RecordA>().Select(r => r.Address).ToArray();
         }
 
         public static async Task<IPAddress[]> LookupIp6Addresses(string domainLabel)
         {
-            var response = await Task.Run(() => Resolver.Query(domainLabel, QType.Aaaa, QClass.In));
-            return response.RecordsAaaa.Select(r => r.Address).ToArray();
+            var response = await Task.Run(() => Resolver.Query(domainLabel, QuestionType.Aaaa, QuestionClass.In));
+            return response.GetAnswers<RecordAaaa>().Select(r => r.Address).ToArray();
         }
 
         public static async Task<string[]> LookupDomainName(IPAddress ip)
         {
-            var response = await Task.Run(() => Resolver.Query(ip.ToString(), QType.Ptr, QClass.In));
-            return response.RecordsPtr.Select(r => r.Ptrdname).ToArray();
+            var response = await Task.Run(() => Resolver.Query(ip.ToString(), QuestionType.Ptr, QuestionClass.In));
+            return response.GetAnswers<RecordPtr>().Select(r => r.Ptrdname).ToArray();
         }
 
         public static async Task<string[]> LookupMailExchange(string domainLabel)
         {
-            var response = await Task.Run(() => Resolver.Query(domainLabel, QType.Mx, QClass.In));
-            return response.RecordsMx.Select(r => r.Exchange).ToArray();
+            var response = await Task.Run(() => Resolver.Query(domainLabel, QuestionType.Mx, QuestionClass.In));
+            return response.GetAnswers<RecordMx>().Select(r => r.Exchange).ToArray();
         }
 
         public static async Task<string[]> LookupText(string domainLabel)
         {
-            var response = await Task.Run(() => Resolver.Query(domainLabel, QType.Txt, QClass.In));
-            return response.RecordsTxt.Select(r => r.ToString()).ToArray();
+            var response = await Task.Run(() => Resolver.Query(domainLabel, QuestionType.Txt, QuestionClass.In));
+            return response.GetAnswers<RecordTxt>().Select(r => r.ToString()).ToArray();
         }
 
         public static int Next(int maxValue)

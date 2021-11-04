@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Resolution" Version="1.0.0" />
+      <PackageReference Include="Resolution" Version="2.0.0" />
     </ItemGroup>
 
 </Project>
