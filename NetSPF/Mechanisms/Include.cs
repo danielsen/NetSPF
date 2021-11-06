@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace NetSPF.Mechanisms
@@ -13,13 +14,13 @@ namespace NetSPF.Mechanisms
             _spfExpressions = spfExpressions;
         }
 
-        public override async Task<SpfResult> Matches()
+        public override async Task<SpfResult> Matches(IPAddress dnsHost = null)
         {
             string originalDomain = SpfStatement.Domain;
             SpfStatement.Domain = Domain;
             try
             {
-                KeyValuePair<SpfResult, string> result = await SpfResolver.CheckHost(SpfStatement, _spfExpressions);
+                KeyValuePair<SpfResult, string> result = await SpfResolver.CheckHost(SpfStatement, _spfExpressions, dnsHost);
 
                 switch (result.Key)
                 {

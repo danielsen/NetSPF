@@ -21,15 +21,15 @@ namespace NetSPF
         /// <param name="sender">the "MAIL FROM" or "HELO" identity.</param>
         /// <param name="heloDomain">Domain as presented by the client in the HELO or EHLO command.</param>
         /// <param name="hostDomain">Domain of the current host, performing SPF authentication.</param>
+        /// <param name="dnsHost">The DNS host to query</param>
         /// <param name="spfExpressions">SPF Expressions that can be used, in case a domain lacks SPF records in the DNS.</param>
         /// <returns>Result of SPF evaluation, together with an optional explanation string,
         /// if one exists, and if the result indicates a failure.</returns>
         public static Task<KeyValuePair<SpfResult, string>> CheckHost(IPAddress address, string domainName,
-            string sender,
-            string heloDomain, string hostDomain, params SpfExpression[] spfExpressions)
+            string sender, string heloDomain, string hostDomain, IPAddress dnsHost = null, params SpfExpression[] spfExpressions)
         {
             SpfStatement spfStatement = new SpfStatement(sender, domainName, address, heloDomain, hostDomain);
-            return CheckHost(spfStatement, spfExpressions);
+            return CheckHost(spfStatement, spfExpressions, dnsHost);
         }
 
         /// <summary>
@@ -39,10 +39,11 @@ namespace NetSPF
         /// </summary>
         /// <param name="spfStatement">Information about current query.</param>
         /// <param name="spfExpressions">SPF Expressions that can be used, in case a domain lacks SPF records in the DNS.</param>
+        /// <param name="dnsHost">The DNS host to query</param>
         /// <returns>Result of SPF evaluation, together with an optional explanation string,
         /// if one exists, and if the result indicates a failure.</returns>
         internal static async Task<KeyValuePair<SpfResult, string>> CheckHost(SpfStatement spfStatement,
-            SpfExpression[] spfExpressions)
+            SpfExpression[] spfExpressions, IPAddress dnsHost)
         {
             Explanation explanation = null;
             string[] spfStatementStrings = null;
@@ -50,7 +51,7 @@ namespace NetSPF
 
             try
             {
-                string[] txt = await DnsResolver.LookupText(spfStatement.Domain);
+                string[] txt = await DnsResolver.LookupText(spfStatement.Domain, dnsHost);
 
                 foreach (string row in txt)
                 {
@@ -199,7 +200,7 @@ namespace NetSPF
                 {
                     await mechanism.Expand();
 
-                    SpfResult result = await mechanism.Matches();
+                    SpfResult result = await mechanism.Matches(dnsHost);
 
                     switch (result)
                     {
@@ -240,7 +241,7 @@ namespace NetSPF
                     try
                     {
                         KeyValuePair<SpfResult, string> result =
-                            await SpfResolver.CheckHost(spfStatement, spfExpressions);
+                            await SpfResolver.CheckHost(spfStatement, spfExpressions, dnsHost);
 
                         if (result.Key == SpfResult.None)
                             return new KeyValuePair<SpfResult, string>(SpfResult.PermanentError,

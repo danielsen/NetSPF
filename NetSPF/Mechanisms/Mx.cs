@@ -11,13 +11,13 @@ namespace NetSPF.Mechanisms
         {
         }
 
-        public override async Task<SpfResult> Matches()
+        public override async Task<SpfResult> Matches(IPAddress dnsHost = null)
         {
             if (SpfStatement.RemainingQueries-- <= 0)
                 throw new Exception("DNS Lookup maximum reached.");
 
             string targetDomain = TargetDomain;
-            string[] exchanges = await DnsResolver.LookupMailExchange(TargetDomain);
+            string[] exchanges = await DnsResolver.LookupMailExchange(TargetDomain, dnsHost);
 
             foreach (string exchange in exchanges)
             {
@@ -30,7 +30,7 @@ namespace NetSPF.Mechanisms
                         if (SpfStatement.RemainingQueries-- <= 0)
                             throw new Exception("DNS Lookup maximum reached.");
 
-                        addresses = await DnsResolver.LookupIp4Addresses(exchange);
+                        addresses = await DnsResolver.LookupIp4Addresses(exchange, dnsHost);
                         cidr = Ipv4Cidr;
                         break;
 
@@ -38,7 +38,7 @@ namespace NetSPF.Mechanisms
                         if (SpfStatement.RemainingQueries-- <= 0)
                             throw new Exception("DNS Lookup maximum reached.");
 
-                        addresses = await DnsResolver.LookupIp6Addresses(exchange);
+                        addresses = await DnsResolver.LookupIp6Addresses(exchange, dnsHost);
                         cidr = Ipv6Cidr;
                         break;
 

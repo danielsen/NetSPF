@@ -1,3 +1,4 @@
+using System.Net;
 using System.Threading.Tasks;
 
 namespace NetSPF.Mechanisms
@@ -18,6 +19,6 @@ namespace NetSPF.Mechanisms
             return Task.CompletedTask;
         }
 
-        public abstract Task<SpfResult> Matches();
+        public abstract Task<SpfResult> Matches(IPAddress dnsHost = null);
     }
 }

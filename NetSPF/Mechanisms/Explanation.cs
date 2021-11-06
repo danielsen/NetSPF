@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace NetSPF.Mechanisms
 
         public override char Separator => '=';
 
-        public override Task<SpfResult> Matches()
+        public override Task<SpfResult> Matches(IPAddress dnsHost = null)
         {
             return Task.FromResult(SpfResult.Fail);
         }

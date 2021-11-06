@@ -56,7 +56,7 @@ namespace NetSPF.Mechanisms
                 Cidr = max;
         }
 
-        public override Task<SpfResult> Matches()
+        public override Task<SpfResult> Matches(IPAddress dnsHost = null)
         {
             bool result = DomainCidrSpecification.Matches(new IPAddress[] {IpAddress}, SpfStatement, Cidr);
             return Task.FromResult<SpfResult>(result ? SpfResult.Pass : SpfResult.Fail);

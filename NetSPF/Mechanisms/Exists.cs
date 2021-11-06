@@ -10,14 +10,14 @@ namespace NetSPF.Mechanisms
         {
         }
 
-        public override async Task<SpfResult> Matches()
+        public override async Task<SpfResult> Matches(IPAddress dnsHost = null)
         {
             if (SpfStatement.RemainingQueries-- <= 0)
                 throw new Exception("DNS lookup maximum reached.");
 
             try
             {
-                IPAddress[] addresses = await DnsResolver.LookupIp4Addresses(Domain);
+                IPAddress[] addresses = await DnsResolver.LookupIp4Addresses(Domain, dnsHost);
                 if (addresses is null || addresses.Length == 0)
                     return SpfResult.Fail;
                 

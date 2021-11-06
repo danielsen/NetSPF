@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace NetSPF.Mechanisms
@@ -11,7 +12,7 @@ namespace NetSPF.Mechanisms
 
         public override bool DomainRequired => false;
 
-        public override async Task<SpfResult> Matches()
+        public override async Task<SpfResult> Matches(IPAddress dnsHost = null)
         {
             try
             {
@@ -19,7 +20,7 @@ namespace NetSPF.Mechanisms
                     throw new Exception("DNS Lookup maximum reached.");
 
                 string targetDomain = TargetDomain;
-                string[] domainNames = await DnsResolver.LookupDomainName(SpfStatement.IpAddress);
+                string[] domainNames = await DnsResolver.LookupDomainName(SpfStatement.IpAddress, dnsHost);
 
                 // First check if domain is found.
 

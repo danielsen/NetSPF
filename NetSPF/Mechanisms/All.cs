@@ -1,3 +1,4 @@
+using System.Net;
 using System.Threading.Tasks;
 
 namespace NetSPF.Mechanisms
@@ -8,7 +9,7 @@ namespace NetSPF.Mechanisms
         {
         }
 
-        public override Task<SpfResult> Matches()
+        public override Task<SpfResult> Matches(IPAddress dnsHost = null)
         {
             return Task.FromResult<SpfResult>(SpfResult.Pass);
         }

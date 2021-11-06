@@ -13,7 +13,7 @@
         <Description>NetSPF is a simple SPF validation utility.</Description>
         <Summary>NetSPF is a simple SPF validation utility.</Summary>
         <Product>NetSPF</Product>
-        <PackageVersion>1.0.2</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
         <PackageLicenseUrl></PackageLicenseUrl>
     </PropertyGroup>
     

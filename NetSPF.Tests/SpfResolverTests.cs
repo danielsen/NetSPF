@@ -15,8 +15,9 @@ namespace NetSPF.Tests
         public async Task should_get_correct_spf_result(string ipAddress, string domain, string sender,
             string heloDomain, string hostDomain, SpfResult expectedResult)
         {
+            var dnsHost = IPAddress.Parse("1.1.1.1");
             KeyValuePair<SpfResult, string> result = await SpfResolver.CheckHost(IPAddress.Parse(ipAddress),
-                domain, sender, heloDomain, hostDomain);
+                domain, sender, heloDomain, hostDomain, dnsHost);
             
             Assert.AreEqual(expectedResult, result.Key, result.Value);
         }

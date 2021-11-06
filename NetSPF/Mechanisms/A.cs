@@ -11,12 +11,13 @@ namespace NetSPF.Mechanisms
         {
         }
 
-        public override async Task<SpfResult> Matches()
+        public override async Task<SpfResult> Matches(IPAddress dnsHost = null)
         {
-            return await Matches(TargetDomain, SpfStatement, Ipv4Cidr, Ipv6Cidr) ? SpfResult.Pass : SpfResult.Fail;
+            return await Matches(TargetDomain, SpfStatement, Ipv4Cidr, Ipv6Cidr, dnsHost) ? SpfResult.Pass : SpfResult.Fail;
         }
 
-        internal static async Task<bool> Matches(string domain, SpfStatement statement, int cidr4, int cidr6)
+        internal static async Task<bool> Matches(string domain, SpfStatement statement, int cidr4, int cidr6, 
+            IPAddress dnsHost)
         {
             IPAddress[] addresses;
 
@@ -27,7 +28,7 @@ namespace NetSPF.Mechanisms
                     if (statement.RemainingQueries-- <= 0)
                         throw new Exception("DNS Lookup maximum reached.");
 
-                    addresses = await DnsResolver.LookupIp4Addresses(domain);
+                    addresses = await DnsResolver.LookupIp4Addresses(domain, dnsHost);
                     cidr = cidr4;
                     break;
 
@@ -35,7 +36,7 @@ namespace NetSPF.Mechanisms
                     if (statement.RemainingQueries-- <= 0)
                         throw new Exception("DNS Lookup maximum reached.");
 
-                    addresses = await DnsResolver.LookupIp6Addresses(domain);
+                    addresses = await DnsResolver.LookupIp6Addresses(domain, dnsHost);
                     cidr = cidr6;
                     break;
 
