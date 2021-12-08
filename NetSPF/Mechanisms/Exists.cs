@@ -6,7 +6,7 @@ namespace NetSPF.Mechanisms
 {
     public class Exists : DomainSpecification
     {
-        public Exists(SpfStatement spfStatement, SpfQualifier qualifier) : base(spfStatement, qualifier)
+        public Exists(SpfStatement spfStatement, SpfQualifier qualifier) : base(qualifier)
         {
         }
 

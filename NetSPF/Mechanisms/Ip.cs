@@ -10,7 +10,7 @@ namespace NetSPF.Mechanisms
         protected readonly IPAddress IpAddress;
         protected readonly int Cidr;
 
-        public Ip(SpfStatement spfStatement, SpfQualifier qualifier) : base(spfStatement, qualifier)
+        public Ip(SpfStatement spfStatement, SpfQualifier qualifier) : base(qualifier)
         {
             if (SpfStatement.PeekNextCharacter() != ':')
                 throw new Exception(": expected.");

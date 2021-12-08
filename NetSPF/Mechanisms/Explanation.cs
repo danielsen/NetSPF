@@ -7,7 +7,7 @@ namespace NetSPF.Mechanisms
 {
     public class Explanation : DomainSpecification
     {
-        public Explanation(SpfStatement spfStatement, SpfQualifier qualifier) : base(spfStatement, qualifier)
+        public Explanation(SpfStatement spfStatement, SpfQualifier qualifier) : base(qualifier)
         {
         }
 

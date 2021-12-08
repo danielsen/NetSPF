@@ -144,7 +144,7 @@ namespace NetSPF
                     switch (spfStatement.NextLabel().ToLower())
                     {
                         case "all":
-                            mechanisms.AddLast(new All(spfStatement, qualifier));
+                            mechanisms.AddLast(new All(qualifier));
                             break;
 
                         case "include":
@@ -152,7 +152,7 @@ namespace NetSPF
                             break;
 
                         case "a":
-                            mechanisms.AddLast(new A(spfStatement, qualifier));
+                            mechanisms.AddLast(new A(qualifier));
                             break;
 
                         case "mx":

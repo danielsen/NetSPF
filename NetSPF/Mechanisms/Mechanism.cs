@@ -8,10 +8,9 @@ namespace NetSPF.Mechanisms
         public SpfQualifier Qualifier { get; }
         public SpfStatement SpfStatement { get; }
 
-        public Mechanism(SpfStatement spfStatement, SpfQualifier qualifier)
+        public Mechanism(SpfQualifier qualifier)
         {
             Qualifier = qualifier;
-            SpfStatement = spfStatement;
         }
 
         public virtual Task Expand()

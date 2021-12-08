@@ -5,7 +5,7 @@ namespace NetSPF.Mechanisms
 {
     public class All : Mechanism
     {
-        public All(SpfStatement spfStatement, SpfQualifier qualifier) : base(spfStatement, qualifier)
+        public All(SpfQualifier qualifier) : base(qualifier)
         {
         }
 

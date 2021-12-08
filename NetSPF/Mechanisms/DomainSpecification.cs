@@ -12,7 +12,7 @@ namespace NetSPF.Mechanisms
         public string Domain { get; private set; }
         private bool _expanded = false;
 
-        public DomainSpecification(SpfStatement spfStatement, SpfQualifier qualifier) : base(spfStatement, qualifier)
+        public DomainSpecification(SpfQualifier qualifier) : base(qualifier)
         {
             if (SpfStatement.PeekNextCharacter() == Separator)
             {

@@ -8,9 +8,10 @@ namespace NetSPF.Mechanisms
         protected readonly int Ipv4Cidr = 32;
         protected readonly int Ipv6Cidr = 128;
 
-        public DomainCidrSpecification(SpfStatement statement, SpfQualifier spfQualifier)
-            : base(statement, spfQualifier)
+        public DomainCidrSpecification(SpfQualifier spfQualifier)
+            : base(spfQualifier)
         {
+            /*
             if (statement.PeekNextCharacter() == '/')
             {
                 statement.NextCharacter();
@@ -42,6 +43,7 @@ namespace NetSPF.Mechanisms
                         throw new Exception("IPv4 or IPv6 CIDR expected.");
                 }
             }
+            */
         }
 
         public override bool DomainRequired => false;

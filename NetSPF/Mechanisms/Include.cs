@@ -9,7 +9,7 @@ namespace NetSPF.Mechanisms
         private readonly SpfExpression[] _spfExpressions;
 
         public Include(SpfStatement spfStatement, SpfQualifier qualifier, params SpfExpression[] spfExpressions)
-            : base(spfStatement, qualifier)
+            : base(qualifier)
         {
             _spfExpressions = spfExpressions;
         }

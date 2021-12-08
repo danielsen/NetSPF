@@ -7,7 +7,7 @@ namespace NetSPF.Mechanisms
 {
     public class A : DomainCidrSpecification
     {
-        public A(SpfStatement statement, SpfQualifier spfQualifier) : base(statement, spfQualifier)
+        public A(SpfQualifier spfQualifier) : base(spfQualifier)
         {
         }
 

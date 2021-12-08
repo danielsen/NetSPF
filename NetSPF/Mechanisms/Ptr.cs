@@ -6,7 +6,7 @@ namespace NetSPF.Mechanisms
 {
     public class Ptr : DomainSpecification
     {
-        public Ptr(SpfStatement spfStatement, SpfQualifier qualifier) : base(spfStatement, qualifier)
+        public Ptr(SpfStatement spfStatement, SpfQualifier qualifier) : base(qualifier)
         {
         }
 
