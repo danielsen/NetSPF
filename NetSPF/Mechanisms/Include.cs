@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -18,9 +19,13 @@ namespace NetSPF.Mechanisms
         {
             string originalDomain = SpfStatement.Domain;
             SpfStatement.Domain = Domain;
+            
+            if (SpfStatement.RemainingQueries-- <= 0)
+                throw new Exception("DNS Lookup maximum reached.");
+            
             try
             {
-                KeyValuePair<SpfResult, string> result = await SpfResolver.CheckHost(SpfStatement, _spfExpressions, dnsHost);
+                KeyValuePair<SpfResult, string> result = await SpfResolver.CheckHostAsync(SpfStatement, _spfExpressions, dnsHost);
 
                 switch (result.Key)
                 {

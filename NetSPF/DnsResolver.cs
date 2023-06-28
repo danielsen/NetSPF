@@ -23,7 +23,7 @@ namespace NetSPF
             var resolver = dnsHost != null
                 ? ResolverFactory.GetResolver(dnsServers: new[] { dnsHost.ToString() }, transportType: TransportType.Tcp)
                 : Resolver;
-            var response = await Task.Run(() => resolver.Query(domainLabel, QuestionType.A, QuestionClass.In));
+            var response = resolver.Query(domainLabel, QuestionType.A, QuestionClass.In);
             return response.GetAnswers<RecordA>().Select(r => r.Address).ToArray();
         }
 
@@ -32,7 +32,7 @@ namespace NetSPF
             var resolver = dnsHost != null
                 ? ResolverFactory.GetResolver(dnsServers: new[] { dnsHost.ToString() }, transportType: TransportType.Tcp)
                 : Resolver;
-            var response = await Task.Run(() => resolver.Query(domainLabel, QuestionType.Aaaa, QuestionClass.In));
+            var response = resolver.Query(domainLabel, QuestionType.Aaaa, QuestionClass.In);
             return response.GetAnswers<RecordAaaa>().Select(r => r.Address).ToArray();
         }
 
@@ -41,7 +41,7 @@ namespace NetSPF
             var resolver = dnsHost != null
                 ? ResolverFactory.GetResolver(dnsServers: new[] { dnsHost.ToString() }, transportType: TransportType.Tcp)
                 : Resolver;
-            var response = await Task.Run(() => resolver.Query(ip.ToString(), QuestionType.Ptr, QuestionClass.In));
+            var response = resolver.Query(ip.ToString(), QuestionType.Ptr, QuestionClass.In);
             return response.GetAnswers<RecordPtr>().Select(r => r.Ptrdname).ToArray();
         }
 
@@ -50,7 +50,7 @@ namespace NetSPF
             var resolver = dnsHost != null
                 ? ResolverFactory.GetResolver(dnsServers: new[] { dnsHost.ToString() }, transportType: TransportType.Tcp)
                 : Resolver;
-            var response = await Task.Run(() => resolver.Query(domainLabel, QuestionType.Mx, QuestionClass.In));
+            var response = resolver.Query(domainLabel, QuestionType.Mx, QuestionClass.In);
             return response.GetAnswers<RecordMx>().Select(r => r.Exchange).ToArray();
         }
 
@@ -59,7 +59,7 @@ namespace NetSPF
             var resolver = dnsHost != null
                 ? ResolverFactory.GetResolver(dnsServers: new[] { dnsHost.ToString() }, transportType: TransportType.Tcp)
                 : Resolver;
-            var response = await Task.Run(() => resolver.Query(domainLabel, QuestionType.Txt, QuestionClass.In));
+            var response = resolver.Query(domainLabel, QuestionType.Txt, QuestionClass.In);
             return response.GetAnswers<RecordTxt>().Select(r => r.ToString()).ToArray();
         }
 

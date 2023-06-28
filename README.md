@@ -4,7 +4,7 @@
 
 ### Packages
 
-- Current Version: `1.1.0`
+- Current Version: `1.2.0`
 - Target Framework: `.NET Standard 2.0`
 
 ### Dependencies
@@ -36,8 +36,3 @@ For example:
     var result = SpfResolver.CheckHost(ipAddress, "zz.com", "noreply@zz.com", "zz.com", "aa.com", dnsHost);
 
 `CheckHost` returns a `KeyValuePair<SpfResult, string>` where string is an explanation if any or simply the string representation of the `SpfResult`
-
-### About
-
-NetSPF is devloped and maintained by [Dan Nielsen](https://github.com/danielsen)
-as an open source project of [ReachMail, the easiest way to deliver email](https://reachmail.com).

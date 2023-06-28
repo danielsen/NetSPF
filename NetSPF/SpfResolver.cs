@@ -29,7 +29,7 @@ namespace NetSPF
             string sender, string heloDomain, string hostDomain, IPAddress dnsHost = null, params SpfExpression[] spfExpressions)
         {
             SpfStatement spfStatement = new SpfStatement(sender, domainName, address, heloDomain, hostDomain);
-            return CheckHost(spfStatement, spfExpressions, dnsHost);
+            return CheckHostAsync(spfStatement, spfExpressions, dnsHost);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace NetSPF
         /// <param name="dnsHost">The DNS host to query</param>
         /// <returns>Result of SPF evaluation, together with an optional explanation string,
         /// if one exists, and if the result indicates a failure.</returns>
-        internal static async Task<KeyValuePair<SpfResult, string>> CheckHost(SpfStatement spfStatement,
+        internal static async Task<KeyValuePair<SpfResult, string>> CheckHostAsync(SpfStatement spfStatement,
             SpfExpression[] spfExpressions, IPAddress dnsHost)
         {
             Explanation explanation = null;
@@ -241,7 +241,7 @@ namespace NetSPF
                     try
                     {
                         KeyValuePair<SpfResult, string> result =
-                            await SpfResolver.CheckHost(spfStatement, spfExpressions, dnsHost);
+                            await SpfResolver.CheckHostAsync(spfStatement, spfExpressions, dnsHost);
 
                         if (result.Key == SpfResult.None)
                             return new KeyValuePair<SpfResult, string>(SpfResult.PermanentError,

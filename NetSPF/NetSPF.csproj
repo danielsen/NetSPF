@@ -4,7 +4,6 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <Authors>Dan Nielsen</Authors>
         <Copyright>Copyright Dan Nielsen 2021</Copyright>
-        <PackageProjectUrl>https://netspf.com</PackageProjectUrl>
         <RepositoryUrl>https://github.com/danielsen/NetSPF/</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>spf email smtp</PackageTags>
@@ -13,7 +12,7 @@
         <Description>NetSPF is a simple SPF validation utility.</Description>
         <Summary>NetSPF is a simple SPF validation utility.</Summary>
         <Product>NetSPF</Product>
-        <PackageVersion>1.1.0</PackageVersion>
+        <PackageVersion>1.2.0</PackageVersion>
         <PackageLicenseUrl></PackageLicenseUrl>
     </PropertyGroup>
     
